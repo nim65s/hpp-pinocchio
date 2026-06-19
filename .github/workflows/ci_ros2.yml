@@ -12,10 +12,7 @@ jobs:
         env:
           - {ROS_DISTRO: rolling}
     env:
-      UPSTREAM_WORKSPACE: |
-        github:humanoid-path-planner/hpp-environment#devel
-        github:humanoid-path-planner/hpp-util#devel
-        github:gepetto/example-robot-data#devel
+      UPSTREAM_WORKSPACE: .github/workflows/deps.repos
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
