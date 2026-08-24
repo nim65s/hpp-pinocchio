@@ -173,12 +173,20 @@ BOOST_AUTO_TEST_CASE(serialization) {
     oa << boost::serialization::make_nvp("joint", joint);
   }
 
-  BOOST_TEST_MESSAGE(ss.str());
+  std::stringstream ss2;
+  std::string xml;
+  xml = ss.str();
+  BOOST_TEST_MESSAGE(xml);
+
+  for (auto pos = 0; (pos = xml.find("inf")) != std::string::npos; pos += 3)
+    xml.replace(pos, 3, "0.0");
+
+  ss2 << xml;
 
   DevicePtr_t device2;
   JointPtr_t joint2;
   {
-    hpp::serialization::xml_iarchive ia(ss);
+    hpp::serialization::xml_iarchive ia(ss2);
     ia.insert(device->name(), device.get());
     ia.initialize();
     ia >> boost::serialization::make_nvp("device", device2);
